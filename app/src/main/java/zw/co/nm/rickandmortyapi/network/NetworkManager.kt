@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import zw.co.nm.rickandmortyapi.ui.Const.baseUrl
+import zw.co.nm.rickandmortyapi.utils.Const.baseUrl
 
 object NetworkManager {
 

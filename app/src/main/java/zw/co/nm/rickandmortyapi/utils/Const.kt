@@ -1,4 +1,4 @@
-package zw.co.nm.rickandmortyapi.ui
+package zw.co.nm.rickandmortyapi.utils
 
 object Const {
     const val baseUrl = "https://rickandmortyapi.com/api/"
