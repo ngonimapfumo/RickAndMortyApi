@@ -19,12 +19,14 @@ class CharacterActivity : AppCompatActivity() {
         val getCharacterViewModel = ViewModelProvider(this)[GetCharacterViewModel::class.java]
 
         lifecycleScope.launch {
-            getCharacterViewModel.getCharacter(12).collect(::response)
+            getCharacterViewModel.getCharacter(93).collect(::response)
         }
 
     }
 
     private fun response(res: GetSingleCharacterResponse?) {
+        activityCharacterBinding.nameTextView.text = res?.name
+        activityCharacterBinding.specieTxt.text = res?.species
         Picasso.get().load(res?.image).into(activityCharacterBinding.characterImg)
     }
 }
