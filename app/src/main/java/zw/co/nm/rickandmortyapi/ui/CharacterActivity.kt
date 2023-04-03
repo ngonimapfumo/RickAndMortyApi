@@ -28,24 +28,23 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun response(res: GetSingleCharacterResponse?) {
-        if (res?.status!! == "Alive") {
-            activityCharacterBinding.statusTxt.setTextColor(
+        activityCharacterBinding.statusTxt.setTextColor(
+            if (res?.status!! == "Alive") {
                 ContextCompat.getColor(
                     this@CharacterActivity,
                     R.color.green
                 )
-            )
-        } else {
-            activityCharacterBinding.statusTxt.setTextColor(
+            } else {
                 ContextCompat.getColor(
                     this@CharacterActivity,
                     R.color.red
                 )
-            )
-        }
+            }
+        )
 
         activityCharacterBinding.nameTextView.text = res.name
         activityCharacterBinding.specieTxt.text = res.species
+        activityCharacterBinding.typeTxt.text = res.type
         activityCharacterBinding.locationTxt.text = res.location.name
         activityCharacterBinding.statusTxt.text = res.status
         Picasso.get().load(res.image).into(activityCharacterBinding.characterImg)
