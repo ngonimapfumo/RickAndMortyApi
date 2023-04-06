@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 import zw.co.nm.rickandmortyapi.databinding.ItemCharacterBinding
 import zw.co.nm.rickandmortyapi.models.CharacterModel
 
-class CharacterListAdapter(private val dataSet: List<CharacterModel>) :
+class CharacterListAdapter(private val dataSet: ArrayList<CharacterModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var itemCharacterBinding: ItemCharacterBinding? = null

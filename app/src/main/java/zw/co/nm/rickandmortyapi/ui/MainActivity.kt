@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import zw.co.nm.rickandmortyapi.databinding.ActivityMainBinding
 import zw.co.nm.rickandmortyapi.models.CharacterModel
@@ -16,7 +17,10 @@ import zw.co.nm.rickandmortyapi.viewmodels.GetAllCharactersViewModel
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var activityMainBinding: ActivityMainBinding
-    private var characterListAdapter: CharacterListAdapter? = null
+
+    private lateinit var charArrayList: ArrayList<CharacterModel>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,11 +34,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun response(res: GetAllCharactersResponse?) {
 
-       var arrl = arrayListOf<CharacterModel>()
-
         activityMainBinding.recyclerview.setHasFixedSize(true)
-        activityMainBinding.recyclerview.layoutManager= GridLayoutManager(this@MainActivity,2)
-        activityMainBinding.recyclerview.adapter = CharacterListAdapter(arrl)
+        activityMainBinding.recyclerview.layoutManager = GridLayoutManager(this@MainActivity,3)
+
+        charArrayList = arrayListOf()
+
+
+        for (i in res?.results!!.indices) {
+            val characters = CharacterModel(res.results[i].image)
+            charArrayList.add(characters)
+        }
+        activityMainBinding.recyclerview.adapter = CharacterListAdapter(charArrayList)
+
     }
 
     override fun onClick(p0: View?) {
