@@ -18,34 +18,33 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityCharacterBinding = ActivityCharacterBinding.inflate(layoutInflater)
         setContentView(activityCharacterBinding.root)
+        val id = intent.getStringExtra("id")
         val getCharacterViewModel = ViewModelProvider(this)[GetCharacterViewModel::class.java]
 
         lifecycleScope.launch {
-            //generating random characters for testing here
-            getCharacterViewModel.getCharacter((1..160).random()).collect(::response)
+            getCharacterViewModel.getCharacter(Integer.parseInt(id!!)).collect(::response)
         }
 
     }
 
     private fun response(res: GetSingleCharacterResponse?) {
-        if (res?.status!! == "Alive") {
-            activityCharacterBinding.statusTxt.setTextColor(
+        activityCharacterBinding.statusTxt.setTextColor(
+            if (res?.status!! == "Alive") {
                 ContextCompat.getColor(
                     this@CharacterActivity,
                     R.color.green
                 )
-            )
-        } else {
-            activityCharacterBinding.statusTxt.setTextColor(
+            } else {
                 ContextCompat.getColor(
                     this@CharacterActivity,
                     R.color.red
                 )
-            )
-        }
+            }
+        )
 
         activityCharacterBinding.nameTextView.text = res.name
         activityCharacterBinding.specieTxt.text = res.species
+        activityCharacterBinding.typeTxt.text = res.type
         activityCharacterBinding.locationTxt.text = res.location.name
         activityCharacterBinding.statusTxt.text = res.status
         Picasso.get().load(res.image).into(activityCharacterBinding.characterImg)
