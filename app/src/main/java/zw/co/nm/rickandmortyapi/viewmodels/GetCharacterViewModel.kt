@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.flow.Flow
 import zw.co.nm.rickandmortyapi.models.responses.GetSingleCharacterResponse
+import zw.co.nm.rickandmortyapi.network.Cache
 import zw.co.nm.rickandmortyapi.repositories.GetCharacterRepo
 
 class GetCharacterViewModel(application: Application) : AndroidViewModel(application) {

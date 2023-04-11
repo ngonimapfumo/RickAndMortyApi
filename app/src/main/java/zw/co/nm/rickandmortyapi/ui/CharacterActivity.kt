@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import zw.co.nm.rickandmortyapi.R
 import zw.co.nm.rickandmortyapi.databinding.ActivityCharacterBinding
 import zw.co.nm.rickandmortyapi.models.responses.GetSingleCharacterResponse
+import zw.co.nm.rickandmortyapi.network.Cache
 import zw.co.nm.rickandmortyapi.viewmodels.GetCharacterViewModel
 
 class CharacterActivity : AppCompatActivity() {
@@ -48,5 +49,11 @@ class CharacterActivity : AppCompatActivity() {
         activityCharacterBinding.locationTxt.text = res.location.name
         activityCharacterBinding.statusTxt.text = res.status
         Picasso.get().load(res.image).into(activityCharacterBinding.characterImg)
+
+        res.let {
+            Cache.characterMap[res.id] = it
+        }
+
+
     }
 }
