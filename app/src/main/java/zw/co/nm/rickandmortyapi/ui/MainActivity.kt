@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import zw.co.nm.rickandmortyapi.databinding.ActivityMainBinding
 import zw.co.nm.rickandmortyapi.models.CharacterModel
 import zw.co.nm.rickandmortyapi.models.responses.GetAllCharactersResponse
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun response(res: GetAllCharactersResponse?) {
 
         activityMainBinding.recyclerview.setHasFixedSize(true)
-        activityMainBinding.recyclerview.layoutManager = GridLayoutManager(this@MainActivity, 3)
+        activityMainBinding.recyclerview.layoutManager = LinearLayoutManager(this@MainActivity)
         charArrayList = arrayListOf()
 
 
