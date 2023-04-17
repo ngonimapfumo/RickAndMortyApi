@@ -3,8 +3,10 @@ package zw.co.nm.rickandmortyapi.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 import zw.co.nm.rickandmortyapi.R
@@ -23,7 +25,12 @@ class CharacterActivity : AppCompatActivity() {
         val getCharacterViewModel = ViewModelProvider(this)[GetCharacterViewModel::class.java]
 
         lifecycleScope.launch {
-            getCharacterViewModel.getCharacter(Integer.parseInt(id!!)).collect(::response)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    getCharacterViewModel.getCharacter(Integer.parseInt(id!!)).collect(::response)
+                }
+            }
+
         }
 
     }

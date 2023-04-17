@@ -2,12 +2,13 @@ package zw.co.nm.rickandmortyapi.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.launch
 import zw.co.nm.rickandmortyapi.databinding.ActivityMainBinding
 import zw.co.nm.rickandmortyapi.models.CharacterModel
 import zw.co.nm.rickandmortyapi.models.responses.GetAllCharactersResponse
@@ -25,8 +26,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
         val getAllCharactersViewModel =
             ViewModelProvider(this)[GetAllCharactersViewModel::class.java]
-        lifecycleScope.launchWhenStarted {
-            getAllCharactersViewModel.getCharacters().collect(::response)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { getAllCharactersViewModel.getCharacters().collect(::response) }
+            }
+
         }
     }
 
@@ -38,16 +42,17 @@ class MainActivity : AppCompatActivity() {
 
 
         for (i in res?.results!!.indices) {
-            val characters = CharacterModel(res.results[i].image,res.results[i].id.toString())
+            val characters = CharacterModel(res.results[i].image, res.results[i].id.toString())
             charArrayList.add(characters)
         }
         adapter = CharacterListAdapter(charArrayList)
         activityMainBinding.recyclerview.adapter = adapter
         adapter.onItemClick = {
-           startActivity(Intent(this@MainActivity,CharacterActivity::class.java)
-               .putExtra("id",it.id))
+            startActivity(
+                Intent(this@MainActivity, CharacterActivity::class.java)
+                    .putExtra("id", it.id)
+            )
         }
-
 
 
     }
