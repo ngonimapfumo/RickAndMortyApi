@@ -2,6 +2,7 @@ package zw.co.nm.rickandmortyapi.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -28,32 +29,41 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this)[GetAllCharactersViewModel::class.java]
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { getAllCharactersViewModel.getCharacters().collect(::response) }
+                launch {
+                    getAllCharactersViewModel.getCharacters().collect {
+
+                        if (it.isSuccessful) {
+                            activityMainBinding.recyclerview.setHasFixedSize(true)
+                            activityMainBinding.recyclerview.layoutManager =
+                                LinearLayoutManager(this@MainActivity)
+                            charArrayList = arrayListOf()
+                            for (i in it.body.results.indices) {
+                                val characters = CharacterModel(
+                                    it.body.results[i].image,
+                                    it.body.results[i].id.toString()
+                                )
+                                charArrayList.add(characters)
+                            }
+                            adapter = CharacterListAdapter(charArrayList)
+                            activityMainBinding.recyclerview.adapter = adapter
+                            adapter.onItemClick = {
+                                startActivity(
+                                    Intent(this@MainActivity, CharacterActivity::class.java)
+                                        .putExtra("id", it.id)
+                                )
+                            }
+                        }else{
+                            Toast.makeText(this@MainActivity, "Mmmm", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
-
         }
-    }
-
-    private fun response(res: GetAllCharactersResponse?) {
-
-        activityMainBinding.recyclerview.setHasFixedSize(true)
-        activityMainBinding.recyclerview.layoutManager = LinearLayoutManager(this@MainActivity)
-        charArrayList = arrayListOf()
-
-
-        for (i in res?.results!!.indices) {
-            val characters = CharacterModel(res.results[i].image, res.results[i].id.toString())
-            charArrayList.add(characters)
-        }
-        adapter = CharacterListAdapter(charArrayList)
-        activityMainBinding.recyclerview.adapter = adapter
-        adapter.onItemClick = {
-            startActivity(
-                Intent(this@MainActivity, CharacterActivity::class.java)
-                    .putExtra("id", it.id)
-            )
-        }
-
 
     }
+}
+
+private fun response(res: GetAllCharactersResponse?) {
+
+
 }

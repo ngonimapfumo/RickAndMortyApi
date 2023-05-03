@@ -14,7 +14,8 @@ class GetCharacterRepo {
         val cachedCharacter = Cache.characterMap[characterId]
         if (cachedCharacter != null) {
             emit(cachedCharacter)
-        } else
-        emit(NetworkManager.apiService.getCharacterById(characterId).body())
+        } else {
+            emit(NetworkManager.apiService.getCharacterById(characterId).body())
+        }
     }.flowOn(Dispatchers.IO)
 }
