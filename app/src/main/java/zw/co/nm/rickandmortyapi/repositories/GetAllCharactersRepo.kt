@@ -9,9 +9,7 @@ import zw.co.nm.rickandmortyapi.models.responses.GetAllCharactersResponse
 import zw.co.nm.rickandmortyapi.network.NetworkManager
 
 class GetAllCharactersRepo {
-
     fun getAllCharacters(): Flow<zw.co.nm.rickandmortyapi.network.Response<GetAllCharactersResponse>> = flow {
-       // emit(NetworkManager.apiService.getAllCharacters().body())
         emit(apiCall { NetworkManager.apiService.getAllCharacters()})
     }.flowOn(Dispatchers.IO)
 
