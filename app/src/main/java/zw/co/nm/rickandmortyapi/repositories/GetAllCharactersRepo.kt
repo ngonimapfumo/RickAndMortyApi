@@ -15,13 +15,13 @@ class GetAllCharactersRepo {
         emit(apiCall { NetworkManager.apiService.getAllCharacters()})
     }.flowOn(Dispatchers.IO)
 
+
+    //todo: imp DRY
     private inline fun <T> apiCall(apiCall: () -> Response<T>): zw.co.nm.rickandmortyapi.network.Response<T> {
         return try {
             zw.co.nm.rickandmortyapi.network.Response.success(apiCall.invoke())
         } catch (e: Exception) {
             zw.co.nm.rickandmortyapi.network.Response.failure(e)
         }
-
-
     }
 }
