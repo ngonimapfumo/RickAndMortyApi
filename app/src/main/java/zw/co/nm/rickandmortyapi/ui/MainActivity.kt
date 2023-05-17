@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                                     it.body.results[i].id.toString()
                                 )
                                 charArrayList.add(characters)
+                                println(characters)
                             }
                             adapter = CharacterListAdapter(charArrayList)
                             activityMainBinding.recyclerview.adapter = adapter

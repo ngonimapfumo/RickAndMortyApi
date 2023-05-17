@@ -34,6 +34,10 @@ class CharacterListAdapter(
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class ItemViewHolder(itemCharacterBinding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(itemCharacterBinding.root) {
     }
