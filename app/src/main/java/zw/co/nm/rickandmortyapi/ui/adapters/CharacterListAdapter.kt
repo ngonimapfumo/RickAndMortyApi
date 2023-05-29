@@ -1,16 +1,20 @@
 package zw.co.nm.rickandmortyapi.ui.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import zw.co.nm.rickandmortyapi.databinding.ItemCharacterBinding
 import zw.co.nm.rickandmortyapi.models.CharacterModel
+import zw.co.nm.rickandmortyapi.models.responses.GetAllCharactersResponse
+import zw.co.nm.rickandmortyapi.ui.MainActivity
 
 class CharacterListAdapter(
-    private val dataSet: ArrayList<CharacterModel>
+    private val dataSet: List<GetAllCharactersResponse.Result>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     var onItemClick: ((CharacterModel) -> Unit)? = null
     private var itemCharacterBinding: ItemCharacterBinding? = null
 
@@ -27,19 +31,25 @@ class CharacterListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val data = dataSet[position]
-        Picasso.get().load(dataSet[position].image).into(itemCharacterBinding!!.imageView)
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(data)
-        }
+         val data = dataSet[position]
+         Picasso.get().load(dataSet[position].image).into(itemCharacterBinding!!.imageView)
+         holder.itemView.setOnClickListener {
+             Toast.makeText(holder.itemView.context, data.id.toString(), Toast.LENGTH_SHORT).show()
+         }
+
+
     }
 
     override fun getItemViewType(position: Int): Int {
         return position
     }
 
-    inner class ItemViewHolder(itemCharacterBinding: ItemCharacterBinding) :
+    class ItemViewHolder(itemCharacterBinding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(itemCharacterBinding.root) {
+        /*init {
+            Picasso.get().load(data[adapterPosition].image).into(itemCharacterBinding.imageView)
+        }*/
+
     }
 }
 
