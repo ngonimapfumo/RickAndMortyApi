@@ -1,6 +1,5 @@
 package zw.co.nm.rickandmortyapi.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +7,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import zw.co.nm.rickandmortyapi.databinding.ActivityMainBinding
-import zw.co.nm.rickandmortyapi.models.CharacterModel
-import zw.co.nm.rickandmortyapi.models.responses.GetAllCharactersResponse
 import zw.co.nm.rickandmortyapi.ui.adapters.CharacterListAdapter
 import zw.co.nm.rickandmortyapi.viewmodels.GetAllCharactersViewModel
 

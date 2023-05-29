@@ -46,9 +46,6 @@ class CharacterListAdapter(
 
     class ItemViewHolder(itemCharacterBinding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(itemCharacterBinding.root) {
-        /*init {
-            Picasso.get().load(data[adapterPosition].image).into(itemCharacterBinding.imageView)
-        }*/
 
     }
 }
